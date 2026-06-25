@@ -123,7 +123,7 @@ export function InspectionEditor({
       </div>
 
       {/* Sticky summary + section tabs */}
-      <div className="sticky top-16 z-10 space-y-3 rounded-xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur">
+      <div className="sticky top-[4.25rem] z-10 space-y-3 rounded-xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur">
         <div className="flex flex-wrap items-center justify-between gap-3 px-1">
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <span className="text-slate-500">

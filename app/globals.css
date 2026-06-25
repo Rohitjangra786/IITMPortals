@@ -1,24 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-300: #a5b4fc;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
-  --color-brand-950: #1e1b4b;
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  /* Brand = sky-blue accent scale (CTA #0369A1 lands on brand-700). Paired
+     with navy (slate-900 #0F172A) surfaces for a trustworthy gov-edu look. */
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-200: #bae6fd;
+  --color-brand-300: #7dd3fc;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #0ea5e9;
+  --color-brand-600: #0284c7;
+  --color-brand-700: #0369a1;
+  --color-brand-800: #075985;
+  --color-brand-900: #0c4a6e;
+  --color-brand-950: #082f49;
+
+  /* Navy — deep institutional surfaces & headers. */
+  --color-navy-700: #1e293b;
+  --color-navy-800: #0f172a;
+  --color-navy-900: #020617;
+
+  --font-sans: var(--font-source), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-lexend), system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
 }
 
 :root {
-  --background: #f1f5f9;
-  --foreground: #0f172a;
+  --background: #f8fafc;
+  --foreground: #020617;
 }
 
 html {
@@ -30,6 +39,22 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Headings use Lexend with slightly tightened tracking. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background-color: #bae6fd;
+  color: #0c4a6e;
+}
+
 /* Thin, tidy number inputs (hide spinners for a cleaner mark-entry grid). */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -39,6 +64,18 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---- Print: clean A4 report, hide app chrome ---- */

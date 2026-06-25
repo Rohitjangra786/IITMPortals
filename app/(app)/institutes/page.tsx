@@ -1,3 +1,4 @@
+import { ArrowRight, Building2 } from "lucide-react";
 import Link from "next/link";
 import { NewInstituteForm } from "@/components/actions";
 import { prisma } from "@/lib/prisma";
@@ -14,7 +15,9 @@ export default async function InstitutesPage() {
     <div className="space-y-6">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Institutes</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight text-slate-900">
+            Institutes
+          </h1>
           <p className="mt-1 text-sm text-slate-500">
             Register institutes and start their JAC inspection reports.
           </p>
@@ -34,23 +37,32 @@ export default async function InstitutesPage() {
             <Link
               key={inst.id}
               href={`/institutes/${inst.id}`}
-              className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md"
+              className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
             >
-              <h3 className="text-base font-semibold text-slate-900 group-hover:text-brand-700">
-                {inst.name}
-              </h3>
-              {inst.district ? (
-                <p className="mt-1 text-sm text-slate-500">{inst.district}</p>
-              ) : null}
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-100">
+                  <Building2 className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="truncate font-display text-base font-semibold text-slate-900 group-hover:text-brand-700">
+                    {inst.name}
+                  </h3>
+                  {inst.district ? (
+                    <p className="mt-0.5 truncate text-sm text-slate-500">{inst.district}</p>
+                  ) : null}
+                </div>
+              </div>
               {inst.societyName ? (
-                <p className="mt-2 text-xs text-slate-400">{inst.societyName}</p>
+                <p className="mt-3 truncate text-xs text-slate-400">{inst.societyName}</p>
               ) : null}
               <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-500">
                 <span>
                   {inst._count.inspections} inspection
                   {inst._count.inspections === 1 ? "" : "s"}
                 </span>
-                <span className="font-semibold text-brand-700">View →</span>
+                <span className="inline-flex items-center gap-1 font-semibold text-brand-700">
+                  View <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                </span>
               </div>
             </Link>
           ))}

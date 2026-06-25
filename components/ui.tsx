@@ -9,15 +9,17 @@ export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "navy";
 
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-700 text-white hover:bg-brand-800 focus-visible:outline-brand-700 shadow-sm",
+    "bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-900 focus-visible:outline-brand-600 shadow-sm shadow-brand-700/20",
+  navy:
+    "bg-slate-900 text-white hover:bg-slate-800 active:bg-black focus-visible:outline-slate-700 shadow-sm",
   secondary:
-    "bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 focus-visible:outline-slate-400",
+    "bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 hover:ring-slate-400 focus-visible:outline-slate-400",
   ghost: "bg-transparent text-slate-600 hover:bg-slate-100 focus-visible:outline-slate-400",
-  danger: "bg-red-600 text-white hover:bg-red-700 focus-visible:outline-red-600 shadow-sm",
+  danger: "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:outline-red-500 shadow-sm",
 };
 
 export function Button({
@@ -28,7 +30,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-150 focus-visible:outline-[3px] focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         BUTTON_VARIANTS[variant],
         className,
       )}
