@@ -1,5 +1,6 @@
 // Seed an initial admin committee user (and a demo institute) so the portal is
 // usable on first run. Run with:  npm run db:seed
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
@@ -21,18 +22,18 @@ async function main() {
     },
   });
 
-  // A demo institute so the dashboard isn't empty on first launch.
+  // Seed the host institute so the dashboard isn't empty on first launch.
   const count = await prisma.institute.count();
   if (count === 0) {
     await prisma.institute.create({
       data: {
-        name: "Demo Institute of Technology & Management",
-        address: "Sector 16C, Dwarka, New Delhi - 110078",
-        district: "South West Delhi",
-        telephone: "011-00000000",
-        website: "https://example.edu.in",
-        email: "info@example.edu.in",
-        societyName: "Demo Educational Society",
+        name: "Institute of Information Technology & Management (IITM)",
+        address: "D-29, Institutional Area, Janakpuri, New Delhi-110058",
+        district: "West Delhi",
+        telephone: "011-28525882",
+        website: "https://www.iitmipu.ac.in",
+        email: "director@iitmipu.ac.in",
+        societyName: "Affiliated to GGSIPU · NAAC Accredited · ISO 9001 & 10002",
       },
     });
   }

@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand = IITM maroon accent scale (matches the logo / site theme #800000;
+     CTA lands on brand-700). Paired with navy (slate-900 #0F172A) surfaces for
+     a trustworthy gov-edu look. */
+  --color-brand-50: #fdf3f3;
+  --color-brand-100: #fbe4e4;
+  --color-brand-200: #f6cccc;
+  --color-brand-300: #eca8a8;
+  --color-brand-400: #dd7676;
+  --color-brand-500: #c84a4a;
+  --color-brand-600: #ad3030;
+  --color-brand-700: #8c2222;
+  --color-brand-800: #771d1d;
+  --color-brand-900: #631c1c;
+  --color-brand-950: #360d0d;
+
+  /* Navy — deep institutional surfaces & headers. */
+  --color-navy-700: #1e293b;
+  --color-navy-800: #0f172a;
+  --color-navy-900: #020617;
+
+  /* Loaded via <link> in index.html (Google Fonts). */
+  --font-sans: "Source Sans 3", system-ui, -apple-system, sans-serif;
+  --font-display: "Lexend", system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+}
+
+:root {
+  --background: #f8fafc;
+  --foreground: #020617;
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Headings use Lexend with slightly tightened tracking. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background-color: #f6cccc;
+  color: #631c1c;
+}
+
+/* Thin, tidy number inputs (hide spinners for a cleaner mark-entry grid). */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Print: clean A4 report, hide app chrome ---- */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-break {
+    break-before: page;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+}

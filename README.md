@@ -6,11 +6,16 @@ It digitises the official JAC assessment report: committee members fill in every
 
 ## Tech stack
 
-- **Next.js 16** (App Router) + **React 19** + **TypeScript**
-- **Tailwind CSS v4**
+- **Vite 6** + **React 19** + **React Router 7** + **TypeScript** (single-page app)
+- **Express 4** + **TypeScript** API server (run with **tsx**)
+- **Tailwind CSS v4** (via `@tailwindcss/vite`)
 - **Prisma 6** ORM with **SQLite** (file-based, zero external setup)
-- Custom auth: **bcryptjs** password hashing + **jose** JWT sessions in an httpOnly cookie, route protection via `proxy.ts`
+- Custom auth: **bcryptjs** password hashing + **jose** JWT sessions in an httpOnly cookie; client-side route guards backed by `/api/auth/me`
 - **zod** for request validation
+
+> Originally built on Next.js 16; migrated to a Vite SPA + Express API split so
+> the frontend builds with `vite build` and the backend is a standalone Node
+> server.
 
 ## Features
 
@@ -34,10 +39,15 @@ It digitises the official JAC assessment report: committee members fill in every
 
 ```bash
 npm install
+npm run db:generate  # generate the Prisma client
 npm run db:push      # create the SQLite schema (dev.db)
 npm run db:seed      # seed an admin user + a demo institute
-npm run dev          # http://localhost:3000
+npm run dev          # Vite on http://localhost:5173, API on http://localhost:3001
 ```
+
+`npm run dev` starts **both** the Vite dev server (frontend, port 5173) and the
+Express API (port 3001) concurrently; Vite proxies `/api` to the API server.
+Open **http://localhost:5173**.
 
 ### Default login (from the seed)
 
@@ -60,38 +70,52 @@ AUTH_SECRET="<random 96-char hex>"
 
 ## Scripts
 
-| Script             | Purpose                                  |
-| ------------------ | ---------------------------------------- |
-| `npm run dev`      | Start the dev server                     |
-| `npm run build`    | Production build (type-checks the app)   |
-| `npm run start`    | Start the production server              |
-| `npm run db:push`  | Sync the Prisma schema to SQLite         |
-| `npm run db:seed`  | Seed admin user + demo institute         |
-| `npm run db:reset` | Reset the DB and re-seed                 |
+| Script               | Purpose                                                 |
+| -------------------- | ------------------------------------------------------- |
+| `npm run dev`        | Start Vite (frontend) + Express (API) together          |
+| `npm run build`      | Type-check then build the SPA to `dist/`                |
+| `npm run start`      | Run the production server (serves `dist/` + API)        |
+| `npm run typecheck`  | Type-check the whole project (`tsc --noEmit`)           |
+| `npm run db:generate`| Generate the Prisma client                              |
+| `npm run db:push`    | Sync the Prisma schema to SQLite                        |
+| `npm run db:seed`    | Seed admin user + demo institute                        |
+| `npm run db:reset`   | Reset the DB and re-seed                                |
+
+### Production
+
+```bash
+npm run build        # → dist/
+npm run start        # Express serves dist/ and /api on http://localhost:3001
+```
 
 ## Project layout
 
 ```
-app/
-  (app)/            authenticated area (nav + guard)
-    dashboard/      overview + recent inspections
-    institutes/     institute registry & detail
-    inspections/    [id] editor + [id]/report print view
-  api/              auth, institutes, inspections route handlers
-  login, register   auth pages
-components/
-  sections/         one component per report section
-  inspection-editor.tsx, report.tsx, ui.tsx, …
-lib/
-  scoring.ts        pure scoring engine (TS ratio, FCR, totals, category)
-  jac-config.ts     parameter definitions, TS cases, NAAC grades
-  types.ts          InspectionData and related types
-  auth.ts, session.ts, prisma.ts, inspection.ts
+index.html          Vite entry (loads Google Fonts + /src/main.tsx)
+vite.config.ts      Vite config (React + Tailwind, /api dev proxy)
+src/                 frontend (SPA)
+  main.tsx          React root (BrowserRouter + AuthProvider)
+  App.tsx           routes + auth guards + app layout
+  auth.tsx          auth context (/api/auth/me, login state, logout)
+  hooks/useResource.ts  JSON fetch hook (loading/error/reload)
+  pages/            Login, Register, Dashboard, Institutes,
+                    InstituteDetail, Inspection, Report, NotFound
+  components/
+    sections/       one component per report section
+    inspection-editor.tsx, report.tsx, nav.tsx, ui.tsx, …
+  lib/              shared pure logic (imported by both src and server)
+    scoring.ts      pure scoring engine (TS ratio, FCR, totals, category)
+    jac-config.ts   parameter definitions, TS cases, NAAC grades
+    types.ts        InspectionData and related types
+    inspection.ts   parse stored JSON / recompute summary columns
+server/              Express API
+  index.ts          app entry; mounts /api, serves dist/ in production
+  lib/              prisma.ts, session.ts (jose JWT), auth.ts (bcrypt + cookies)
+  routes/           auth.ts, institutes.ts, inspections.ts
 prisma/
   schema.prisma, seed.ts
-proxy.ts            route protection (Next.js 16 proxy convention)
 ```
 
 ## Scoring reference
 
-The scoring engine in `lib/scoring.ts` implements the GGSIPU JAC guidelines verbatim and is validated against the worked example in the report (3-yr programme, 1 division of 60 students at 1:20 → K = 9, senior = 3, junior = 6; CRF = 2 → 100 marks; CRF = 8 → 0).
+The scoring engine in `src/lib/scoring.ts` implements the GGSIPU JAC guidelines verbatim and is validated against the worked example in the report (3-yr programme, 1 division of 60 students at 1:20 → K = 9, senior = 3, junior = 6; CRF = 2 → 100 marks; CRF = 8 → 0).
