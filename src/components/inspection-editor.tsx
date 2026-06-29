@@ -93,6 +93,18 @@ export function InspectionEditor({
     saved: "Saved",
     error: "Save failed — retrying on next change",
   };
+  const saveStyle: Record<SaveStatus, string> = {
+    idle: "bg-slate-50 text-slate-600 ring-slate-200",
+    saving: "bg-amber-50 text-amber-700 ring-amber-200",
+    saved: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+    error: "bg-red-50 text-red-700 ring-red-200",
+  };
+  const saveDot: Record<SaveStatus, string> = {
+    idle: "bg-slate-400",
+    saving: "bg-amber-500 animate-pulse",
+    saved: "bg-emerald-500",
+    error: "bg-red-500",
+  };
 
   return (
     <div className="space-y-5">
@@ -123,23 +135,25 @@ export function InspectionEditor({
       {/* Sticky summary + section tabs */}
       <div className="sticky top-[4.25rem] z-10 space-y-3 rounded-xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur">
         <div className="flex flex-wrap items-center justify-between gap-3 px-1">
-          <div className="flex flex-wrap items-center gap-4 text-sm">
-            <span className="text-slate-500">
+          <div className="flex flex-wrap items-center gap-4 text-sm font-medium">
+            <span className="text-slate-600">
               Part II:{" "}
               <span className="font-bold text-slate-900">{score.partIIPercent}%</span>
             </span>
-            <span className="text-slate-500">
+            <span className="text-slate-600">
               Part III:{" "}
               <span className="font-bold text-slate-900">{score.partIIIPercent}%</span>
             </span>
             <CategoryBadge category={score.overallCategory} />
           </div>
           <span
+            aria-live="polite"
             className={cn(
-              "text-xs font-medium",
-              saveStatus === "error" ? "text-red-600" : "text-slate-400",
+              "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-sm font-medium ring-1 ring-inset",
+              saveStyle[saveStatus],
             )}
           >
+            <span className={cn("h-1.5 w-1.5 rounded-full", saveDot[saveStatus])} aria-hidden />
             {saveLabel[saveStatus]}
           </span>
         </div>
@@ -150,10 +164,10 @@ export function InspectionEditor({
               type="button"
               onClick={() => setActive(s.id)}
               className={cn(
-                "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+                "rounded-lg px-4 py-2 text-sm font-semibold transition-all",
                 active === s.id
-                  ? "bg-brand-700 text-white"
-                  : "text-slate-600 hover:bg-slate-100",
+                  ? "bg-brand-700 text-white shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900",
               )}
             >
               {s.label}
@@ -162,8 +176,8 @@ export function InspectionEditor({
         </nav>
       </div>
 
-      {/* Active section */}
-      <div>
+      {/* Active section (re-animates on switch via the key) */}
+      <div key={active} className="anim-section">
         {active === "particulars" && <ParticularsSection data={data} update={update} />}
         {active === "programmes" && <ProgrammesSection data={data} update={update} />}
         {active === "partI" && <PartOneSection data={data} update={update} />}

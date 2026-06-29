@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth";
 import { BrandMark, BrandTitle, IitmMark } from "./brand";
+import { TextSizeSwitcher } from "./text-size";
 import { Button, cn } from "./ui";
 
 const LINKS = [
@@ -74,6 +75,7 @@ export function Nav({
           </nav>
         </div>
         <div className="flex items-center gap-3">
+          <TextSizeSwitcher />
           <div className="hidden items-center gap-2.5 sm:flex">
             <span
               className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-800"
