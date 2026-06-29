@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/auth";
 import { BrandMark } from "@/components/brand";
+import { HeroCanvas } from "@/components/hero-canvas";
 import { Button, Field, Input } from "@/components/ui";
 
 const TRUST_POINTS = [
@@ -118,7 +119,9 @@ export function LoginPage() {
           className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-500/20 blur-3xl"
           aria-hidden
         />
-        <div className="flex items-center gap-3">
+        {/* Peacock-blue WebGL particle field (decorative, behind content). */}
+        <HeroCanvas />
+        <div className="relative z-10 flex items-center gap-3">
           <BrandMark size={44} />
           <div className="leading-tight">
             <p className="font-display text-sm font-bold">JAC Inspection Portal</p>
@@ -126,7 +129,7 @@ export function LoginPage() {
           </div>
         </div>
 
-        <div className="relative max-w-md">
+        <div className="relative z-10 max-w-md">
           <h1 className="font-display text-3xl font-bold leading-tight">
             Joint Assessment Committee inspections, done right.
           </h1>
@@ -152,7 +155,7 @@ export function LoginPage() {
           </ul>
         </div>
 
-        <p className="relative text-xs text-slate-400">
+        <p className="relative z-10 text-xs text-slate-400">
           Guru Gobind Singh Indraprastha University · Sector-16C, Dwarka, New Delhi
         </p>
       </aside>
