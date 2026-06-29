@@ -12,7 +12,11 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  // Static placeholder: used by the Prisma CLI and the local file DB. In
+  // production the libSQL driver adapter (Turso) supplies the real connection,
+  // so this must NOT depend on a runtime env var (DATABASE_URL is unset on
+  // Vercel, which would otherwise crash the client when the adapter is used).
+  url      = "file:./dev.db"
 }
 
 /// A committee member / user of the portal.
