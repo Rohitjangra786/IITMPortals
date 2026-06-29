@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/auth";
 import { BrandMark } from "@/components/brand";
-import { HeroCanvas } from "@/components/hero-canvas";
 import { Button, Field, Input } from "@/components/ui";
 
 const TRUST_POINTS = [
@@ -119,8 +118,6 @@ export function LoginPage() {
           className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-500/20 blur-3xl"
           aria-hidden
         />
-        {/* Peacock-blue WebGL particle field (decorative, behind content). */}
-        <HeroCanvas />
         <div className="relative z-10 flex items-center gap-3">
           <BrandMark size={44} />
           <div className="leading-tight">

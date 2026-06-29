@@ -42,10 +42,11 @@ function AuthOnly({ children }: { children: ReactNode }) {
 
 function AppLayout() {
   const { user } = useAuth();
-  // IITM branding (logo + maroon accent) only for IITM-domain users.
+  // The app uses one peacock-blue theme everywhere. IITM-domain users still get
+  // the IITM logo in the nav (just the logo, no colour change).
   const iitm = isIitmEmail(user?.email);
   return (
-    <div className="min-h-screen" data-brand={iitm ? "iitm" : undefined}>
+    <div className="min-h-screen">
       <Nav userName={user?.name ?? ""} userRole={user?.role ?? ""} iitm={iitm} />
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Outlet />

@@ -33,23 +33,6 @@
   --foreground: #020617;
 }
 
-/* IITM maroon accent — applied only to subtrees branded for IITM users (the
-   authenticated shell sets data-brand="iitm"). Overriding these custom
-   properties on a container re-colours every brand-* utility beneath it. */
-[data-brand="iitm"] {
-  --color-brand-50: #fdf3f3;
-  --color-brand-100: #fbe4e4;
-  --color-brand-200: #f6cccc;
-  --color-brand-300: #eca8a8;
-  --color-brand-400: #dd7676;
-  --color-brand-500: #c84a4a;
-  --color-brand-600: #ad3030;
-  --color-brand-700: #8c2222;
-  --color-brand-800: #771d1d;
-  --color-brand-900: #631c1c;
-  --color-brand-950: #360d0d;
-}
-
 html {
   background: var(--background);
   color: var(--foreground);
@@ -90,10 +73,6 @@ h6 {
 ::selection {
   background-color: #99f3ee;
   color: #103f49;
-}
-[data-brand="iitm"] ::selection {
-  background-color: #f6cccc;
-  color: #631c1c;
 }
 
 /* Thin, tidy number inputs (hide spinners for a cleaner mark-entry grid). */
