@@ -98,9 +98,11 @@ function Detail({ label, value }: { label: string; value: string }) {
 export function Report({
   data,
   meta,
+  iitm = false,
 }: {
   data: InspectionData;
   meta: { instituteName: string; session: string; dateOfVisit: string; status: string };
+  iitm?: boolean;
 }) {
   const s = scoreInspection(data);
   const p = data.particulars;
@@ -109,12 +111,34 @@ export function Report({
 
   return (
     <div className="mx-auto max-w-4xl bg-white p-8 text-slate-900 shadow-sm print:p-0 print:shadow-none">
-      {/* Title */}
+      {/* Letterhead */}
       <div className="mb-6 text-center">
-        <h1 className="text-xl font-bold uppercase">Guru Gobind Singh Indraprastha University</h1>
-        <p className="text-xs text-slate-600">
-          A State University established by Govt. of NCT of Delhi · Sector-16C, Dwarka, New Delhi - 110078
-        </p>
+        {iitm ? (
+          <div className="mb-4 flex flex-col items-center border-b border-slate-200 pb-4">
+            <img
+              src="/iitm-logo.png"
+              alt="IITM Janakpuri"
+              className="h-16 w-auto"
+              crossOrigin="anonymous"
+            />
+            <h1 className="mt-2 text-lg font-bold uppercase tracking-tight">
+              Institute of Information Technology &amp; Management
+            </h1>
+            <p className="text-xs text-slate-600">
+              D-29, Institutional Area, Janakpuri, New Delhi-110058 · Affiliated to GGSIPU
+            </p>
+          </div>
+        ) : (
+          <>
+            <h1 className="text-xl font-bold uppercase">
+              Guru Gobind Singh Indraprastha University
+            </h1>
+            <p className="text-xs text-slate-600">
+              A State University established by Govt. of NCT of Delhi · Sector-16C, Dwarka, New
+              Delhi - 110078
+            </p>
+          </>
+        )}
         <h2 className="mt-3 text-base font-bold">
           Report of Joint Assessment Committee — Existing Institutes
         </h2>

@@ -1,4 +1,6 @@
 import { Link, useParams } from "react-router-dom";
+import { useAuth } from "@/auth";
+import { isIitmEmail } from "@/brand-config";
 import { PrintButton } from "@/components/print-button";
 import { Report } from "@/components/report";
 import { parseInspectionData } from "@/lib/inspection";
@@ -17,6 +19,8 @@ interface ReportResponse {
 
 export function ReportPage() {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
+  const iitm = isIitmEmail(user?.email);
   const { data, loading, error } = useResource<ReportResponse>(`/api/inspections/${id}`);
   const inspection = data?.inspection;
 
@@ -36,6 +40,7 @@ export function ReportPage() {
       </div>
       <Report
         data={parseInspectionData(inspection.data)}
+        iitm={iitm}
         meta={{
           instituteName: inspection.institute.name,
           session: inspection.session,
