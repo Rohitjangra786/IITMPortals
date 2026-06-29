@@ -4,7 +4,10 @@
 // the dashboard can list and filter without parsing every blob.
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // native = local dev; rhel-openssl-3.0.x = Vercel serverless runtime. The
+  // libSQL driver adapter (Turso) is enabled in code; no preview flag needed.
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {

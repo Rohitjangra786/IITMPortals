@@ -9,7 +9,9 @@ It digitises the official JAC assessment report: committee members fill in every
 - **Vite 6** + **React 19** + **React Router 7** + **TypeScript** (single-page app)
 - **Express 4** + **TypeScript** API server (run with **tsx**)
 - **Tailwind CSS v4** (via `@tailwindcss/vite`)
-- **Prisma 6** ORM with **SQLite** (file-based, zero external setup)
+- **Prisma 6** ORM with **SQLite** locally and **Turso** (cloud libSQL) in
+  production via the Prisma driver adapter — same schema both sides
+- Deployable to **Vercel** (serverless API function + static SPA) or any Node host
 - Custom auth: **bcryptjs** password hashing + **jose** JWT sessions in an httpOnly cookie; client-side route guards backed by `/api/auth/me`
 - **zod** for request validation
 
@@ -59,12 +61,17 @@ admin@iitmipu.ac.in  /  admin123
 
 ## Environment
 
-`.env` (created on first setup):
+Copy `.env.example` to `.env`. For local development:
 
 ```
 DATABASE_URL="file:./dev.db"
 AUTH_SECRET="<random 96-char hex>"
 ```
+
+In production you also set `TURSO_DATABASE_URL` / `TURSO_AUTH_TOKEN` (see below).
+When `TURSO_DATABASE_URL` is present the app uses Turso (cloud libSQL) via the
+Prisma driver adapter; otherwise it uses the local SQLite file. The schema is
+identical, so **nothing changes for local dev**.
 
 > Sessions are issued as `Secure` cookies in production, so deploy behind **HTTPS**.
 
@@ -81,12 +88,46 @@ AUTH_SECRET="<random 96-char hex>"
 | `npm run db:seed`    | Seed admin user + demo institute                        |
 | `npm run db:reset`   | Reset the DB and re-seed                                |
 
-### Production
+### Production (self-hosted)
 
 ```bash
 npm run build        # → dist/
 npm run start        # Express serves dist/ and /api on http://localhost:3001
 ```
+
+## Deploying to Vercel (with Turso)
+
+SQLite can't run on Vercel (serverless functions have no persistent disk), so
+production uses **Turso** — a cloud database that speaks SQLite. The Express API
+runs as a Vercel **serverless function** ([api/index.ts](api/index.ts) →
+[server/app.ts](server/app.ts)) and Vercel serves the built SPA from `dist/`
+([vercel.json](vercel.json) wires the routing).
+
+**1. Create a Turso database from your local SQLite file** (imports the schema
+and any seed data in one step):
+
+```bash
+npm run db:push                                    # ensure prisma/dev.db is current
+turso db create iitm-portals --from-file prisma/dev.db
+turso db show iitm-portals          # copy the libsql://... URL
+turso db tokens create iitm-portals # copy the token
+```
+
+**2. Set Environment Variables in the Vercel project** (Settings → Environment
+Variables):
+
+| Variable             | Value                                   |
+| -------------------- | --------------------------------------- |
+| `TURSO_DATABASE_URL` | `libsql://your-db.turso.io`             |
+| `TURSO_AUTH_TOKEN`   | the Turso token                         |
+| `AUTH_SECRET`        | a long random string                    |
+
+**3. Deploy** — push to GitHub and import the repo in Vercel (build command,
+output dir and routing are already in `vercel.json`). No `DATABASE_URL` is
+needed at runtime on Vercel; it's only used by the Prisma CLI locally.
+
+> Until `TURSO_DATABASE_URL` is set, the site deploys and loads but API calls
+> that hit the database will fail — connect Turso when you're ready.
 
 ## Project layout
 
