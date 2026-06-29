@@ -1,11 +1,17 @@
-import { PrismaLibSQL } from "@prisma/adapter-libsql";
-import { PrismaClient } from "@prisma/client";
 import { copyFileSync, existsSync } from "node:fs";
+import { createRequire } from "node:module";
 import { join } from "node:path";
+import { PrismaClient } from "@prisma/client";
+
+const require = createRequire(import.meta.url);
 
 function createPrismaClient(): PrismaClient {
-  // 1. Turso (cloud libSQL) — persistent production DB, when configured.
+  // 1. Turso (cloud libSQL) — persistent production DB, only when configured.
+  //    The adapter (and its native @libsql binding) is required LAZILY so it is
+  //    never loaded in the no-Turso path — loading it eagerly crashes the
+  //    serverless function when the native binding isn't bundled.
   if (process.env.TURSO_DATABASE_URL) {
+    const { PrismaLibSQL } = require("@prisma/adapter-libsql") as typeof import("@prisma/adapter-libsql");
     const adapter = new PrismaLibSQL({
       url: process.env.TURSO_DATABASE_URL,
       authToken: process.env.TURSO_AUTH_TOKEN,
@@ -13,11 +19,11 @@ function createPrismaClient(): PrismaClient {
     return new PrismaClient({ adapter });
   }
 
-  // 2. Serverless (Vercel) WITHOUT Turso — plain SQLite for now. The deployment
-  // filesystem is read-only except /tmp, so copy the bundled seed DB there once
-  // and use it. Reads + writes work, but data resets on cold start (per
-  // instance) — fine as a "no database yet" preview. Add Turso later for
-  // persistence (just set TURSO_DATABASE_URL) and this branch is skipped.
+  // 2. Serverless (Vercel) without Turso — plain SQLite via Prisma's native
+  //    engine (which Vercel bundles for us). The deployment FS is read-only
+  //    except /tmp, so copy the bundled seed DB there and point Prisma at it.
+  //    Reads + writes work; data resets on cold start (per instance) — fine as
+  //    a "no database yet" preview. Set TURSO_DATABASE_URL later for persistence.
   if (process.env.VERCEL) {
     const tmpDb = "/tmp/dev.db";
     try {
@@ -28,8 +34,7 @@ function createPrismaClient(): PrismaClient {
     } catch (err) {
       console.error("Could not stage seed DB into /tmp:", err);
     }
-    const adapter = new PrismaLibSQL({ url: `file:${tmpDb}` });
-    return new PrismaClient({ adapter });
+    return new PrismaClient({ datasourceUrl: `file:${tmpDb}` });
   }
 
   // 3. Local dev — native SQLite via the datasource url (file:./dev.db).
