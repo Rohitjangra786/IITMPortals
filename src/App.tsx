@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "./auth";
+import { isIitmEmail } from "./brand-config";
 import { Nav } from "./components/nav";
 import { DashboardPage } from "./pages/Dashboard";
 import { InspectionPage } from "./pages/Inspection";
@@ -41,9 +42,11 @@ function AuthOnly({ children }: { children: ReactNode }) {
 
 function AppLayout() {
   const { user } = useAuth();
+  // IITM branding (logo + maroon accent) only for IITM-domain users.
+  const iitm = isIitmEmail(user?.email);
   return (
-    <div className="min-h-screen">
-      <Nav userName={user?.name ?? ""} userRole={user?.role ?? ""} />
+    <div className="min-h-screen" data-brand={iitm ? "iitm" : undefined}>
+      <Nav userName={user?.name ?? ""} userRole={user?.role ?? ""} iitm={iitm} />
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Outlet />
       </main>

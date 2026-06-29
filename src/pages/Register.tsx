@@ -52,11 +52,11 @@ export function RegisterPage() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 via-slate-50 to-brand-50 px-4 py-12">
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
-          <BrandMark height={48} />
+          <BrandMark size={56} />
           <h1 className="mt-4 font-display text-2xl font-bold tracking-tight text-slate-900">
             Create your account
           </h1>
-          <p className="mt-1 text-sm text-slate-500">JAC Inspection Portal · IITM Janakpuri</p>
+          <p className="mt-1 text-sm text-slate-500">JAC Inspection Portal · GGSIPU</p>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <form onSubmit={onSubmit} className="space-y-4">

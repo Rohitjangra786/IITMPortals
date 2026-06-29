@@ -1,7 +1,20 @@
-// IITM Janakpuri brand assets. The logo is a maroon "IITM — Nurturing
-// Excellence" wordmark; a white variant is used on dark surfaces.
+import { ShieldCheck } from "lucide-react";
 
-export function BrandMark({
+/** General (default) brand mark — a neutral shield, not institute-specific. */
+export function BrandMark({ size = 40 }: { size?: number }) {
+  return (
+    <div
+      className="flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-slate-900 to-slate-700 text-white shadow-sm ring-1 ring-inset ring-white/10"
+      style={{ width: size, height: size }}
+      aria-hidden
+    >
+      <ShieldCheck strokeWidth={2} style={{ width: size * 0.55, height: size * 0.55 }} />
+    </div>
+  );
+}
+
+/** IITM Janakpuri logo — shown only for signed-in IITM users. */
+export function IitmMark({
   height = 36,
   variant = "color",
   className,
@@ -27,9 +40,7 @@ export function BrandTitle({ subtitle }: { subtitle?: string }) {
       <p className="font-display text-sm font-bold tracking-tight text-slate-900">
         JAC Inspection Portal
       </p>
-      <p className="text-xs text-slate-500">
-        {subtitle ?? "IITM Janakpuri · Affiliated to GGSIPU"}
-      </p>
+      <p className="text-xs text-slate-500">{subtitle ?? "GGSIPU · GNCT of Delhi"}</p>
     </div>
   );
 }

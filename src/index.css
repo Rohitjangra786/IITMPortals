@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand = IITM maroon accent scale (matches the logo / site theme #800000;
-     CTA lands on brand-700). Paired with navy (slate-900 #0F172A) surfaces for
-     a trustworthy gov-edu look. */
-  --color-brand-50: #fdf3f3;
-  --color-brand-100: #fbe4e4;
-  --color-brand-200: #f6cccc;
-  --color-brand-300: #eca8a8;
-  --color-brand-400: #dd7676;
-  --color-brand-500: #c84a4a;
-  --color-brand-600: #ad3030;
-  --color-brand-700: #8c2222;
-  --color-brand-800: #771d1d;
-  --color-brand-900: #631c1c;
-  --color-brand-950: #360d0d;
+  /* Brand = sky-blue accent scale (CTA #0369A1 lands on brand-700). Paired
+     with navy (slate-900 #0F172A) surfaces for a trustworthy gov-edu look.
+     This is the GENERAL default; IITM users get a maroon override below. */
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-200: #bae6fd;
+  --color-brand-300: #7dd3fc;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #0ea5e9;
+  --color-brand-600: #0284c7;
+  --color-brand-700: #0369a1;
+  --color-brand-800: #075985;
+  --color-brand-900: #0c4a6e;
+  --color-brand-950: #082f49;
 
   /* Navy — deep institutional surfaces & headers. */
   --color-navy-700: #1e293b;
@@ -30,6 +30,23 @@
 :root {
   --background: #f8fafc;
   --foreground: #020617;
+}
+
+/* IITM maroon accent — applied only to subtrees branded for IITM users (the
+   authenticated shell sets data-brand="iitm"). Overriding these custom
+   properties on a container re-colours every brand-* utility beneath it. */
+[data-brand="iitm"] {
+  --color-brand-50: #fdf3f3;
+  --color-brand-100: #fbe4e4;
+  --color-brand-200: #f6cccc;
+  --color-brand-300: #eca8a8;
+  --color-brand-400: #dd7676;
+  --color-brand-500: #c84a4a;
+  --color-brand-600: #ad3030;
+  --color-brand-700: #8c2222;
+  --color-brand-800: #771d1d;
+  --color-brand-900: #631c1c;
+  --color-brand-950: #360d0d;
 }
 
 html {
@@ -53,6 +70,10 @@ h6 {
 }
 
 ::selection {
+  background-color: #bae6fd;
+  color: #0c4a6e;
+}
+[data-brand="iitm"] ::selection {
   background-color: #f6cccc;
   color: #631c1c;
 }

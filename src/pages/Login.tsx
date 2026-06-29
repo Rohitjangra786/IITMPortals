@@ -119,10 +119,10 @@ export function LoginPage() {
           aria-hidden
         />
         <div className="flex items-center gap-3">
-          <BrandMark variant="white" height={40} />
-          <div className="leading-tight border-l border-white/20 pl-3">
+          <BrandMark size={44} />
+          <div className="leading-tight">
             <p className="font-display text-sm font-bold">JAC Inspection Portal</p>
-            <p className="text-xs text-slate-300">IITM Janakpuri · Affiliated to GGSIPU</p>
+            <p className="text-xs text-slate-300">GGSIPU · GNCT of Delhi</p>
           </div>
         </div>
 
@@ -153,8 +153,7 @@ export function LoginPage() {
         </div>
 
         <p className="relative text-xs text-slate-400">
-          Institute of Information Technology &amp; Management · D-29, Institutional Area,
-          Janakpuri, New Delhi-110058
+          Guru Gobind Singh Indraprastha University · Sector-16C, Dwarka, New Delhi
         </p>
       </aside>
 
@@ -162,11 +161,11 @@ export function LoginPage() {
       <main className="flex items-center justify-center bg-slate-50 px-4 py-12">
         <div className="w-full max-w-sm">
           <div className="mb-6 flex flex-col items-center text-center lg:hidden">
-            <BrandMark height={44} />
+            <BrandMark size={52} />
             <h1 className="mt-3 font-display text-xl font-bold text-slate-900">
               JAC Inspection Portal
             </h1>
-            <p className="text-sm text-slate-500">IITM Janakpuri · Affiliated to GGSIPU</p>
+            <p className="text-sm text-slate-500">GGSIPU · GNCT of Delhi</p>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <h2 className="font-display text-lg font-semibold text-slate-900">

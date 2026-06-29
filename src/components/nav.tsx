@@ -2,7 +2,7 @@ import { Building2, LayoutDashboard, LogOut } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth";
-import { BrandMark, BrandTitle } from "./brand";
+import { BrandMark, BrandTitle, IitmMark } from "./brand";
 import { Button, cn } from "./ui";
 
 const LINKS = [
@@ -10,7 +10,15 @@ const LINKS = [
   { href: "/institutes", label: "Institutes", icon: Building2 },
 ];
 
-export function Nav({ userName, userRole }: { userName: string; userRole: string }) {
+export function Nav({
+  userName,
+  userRole,
+  iitm = false,
+}: {
+  userName: string;
+  userRole: string;
+  iitm?: boolean;
+}) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -37,9 +45,9 @@ export function Nav({ userName, userRole }: { userName: string; userRole: string
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <div className="flex items-center gap-6">
           <Link to="/dashboard" className="flex items-center gap-2.5">
-            <BrandMark height={30} />
+            {iitm ? <IitmMark height={30} /> : <BrandMark size={36} />}
             <span className="hidden border-l border-slate-200 pl-2.5 sm:block">
-              <BrandTitle />
+              <BrandTitle subtitle={iitm ? "IITM Janakpuri · Affiliated to GGSIPU" : undefined} />
             </span>
           </Link>
           <nav className="flex items-center gap-1">
