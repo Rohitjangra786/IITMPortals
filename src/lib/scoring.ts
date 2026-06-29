@@ -13,8 +13,8 @@ import {
   PRACTICAL_TRAINING,
   getTSCase,
   naacMarksForGrade,
-} from "./jac-config";
-import type { SubCriterion } from "./jac-config";
+} from "./jac-config.js";
+import type { SubCriterion } from "./jac-config.js";
 import type {
   Category,
   InspectionData,
@@ -22,7 +22,7 @@ import type {
   Programme,
   ProgrammeScore,
   ScoreSummary,
-} from "./types";
+} from "./types.js";
 
 const clamp = (n: number, min: number, max: number) =>
   Math.max(min, Math.min(max, Number.isFinite(n) ? n : 0));

@@ -4,9 +4,9 @@ import "dotenv/config";
 import "express-async-errors";
 import cookieParser from "cookie-parser";
 import express, { type NextFunction, type Request, type Response } from "express";
-import { authRouter } from "./routes/auth";
-import { institutesRouter } from "./routes/institutes";
-import { inspectionsRouter } from "./routes/inspections";
+import { authRouter } from "./routes/auth.js";
+import { institutesRouter } from "./routes/institutes.js";
+import { inspectionsRouter } from "./routes/inspections.js";
 
 // The Express app with all API routes mounted. No listen() and no static
 // serving here, so it can be used both by the local server (server/index.ts)

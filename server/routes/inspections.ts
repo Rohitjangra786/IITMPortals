@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { z } from "zod";
-import { prisma } from "../lib/prisma";
-import { requireAuth } from "../lib/auth";
-import { createEmptyInspectionData } from "../../src/lib/jac-config";
-import { computeSummaryFields, parseInspectionData } from "../../src/lib/inspection";
+import { prisma } from "../lib/prisma.js";
+import { requireAuth } from "../lib/auth.js";
+import { createEmptyInspectionData } from "../../src/lib/jac-config.js";
+import { computeSummaryFields, parseInspectionData } from "../../src/lib/inspection.js";
 
 export const inspectionsRouter = Router();
 

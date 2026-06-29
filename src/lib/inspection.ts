@@ -1,8 +1,8 @@
 // Server-side helpers that bridge the stored JSON blob and the scoring engine.
 
-import { createEmptyInspectionData } from "./jac-config";
-import { scoreInspection } from "./scoring";
-import type { InspectionData } from "./types";
+import { createEmptyInspectionData } from "./jac-config.js";
+import { scoreInspection } from "./scoring.js";
+import type { InspectionData } from "./types.js";
 
 /** Parse the stored JSON, filling any missing top-level keys from a template. */
 export function parseInspectionData(raw: string | null | undefined): InspectionData {

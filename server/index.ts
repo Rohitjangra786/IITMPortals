@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
-import app from "./app";
+import app from "./app.js";
 
 // Local / self-hosted entry point. On Vercel the app is served by the
 // serverless function in api/index.ts instead (Vercel serves dist/ statically).

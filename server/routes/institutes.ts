@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
-import { prisma } from "../lib/prisma";
-import { requireAuth } from "../lib/auth";
+import { prisma } from "../lib/prisma.js";
+import { requireAuth } from "../lib/auth.js";
 
 export const institutesRouter = Router();
 

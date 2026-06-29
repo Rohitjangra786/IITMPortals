@@ -2,7 +2,7 @@
 // Technical & Non-Technical, Session 2026-27). Sub-criteria keys/labels/max
 // marks live here so the form UI and scoring engine stay data-driven.
 
-import type { InspectionData } from "./types";
+import type { InspectionData } from "./types.js";
 
 export interface SubCriterion {
   key: string;

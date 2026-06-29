@@ -3,14 +3,14 @@
 
 import bcrypt from "bcryptjs";
 import type { NextFunction, Request, Response } from "express";
-import { prisma } from "./prisma";
+import { prisma } from "./prisma.js";
 import {
   SESSION_COOKIE,
   type SessionPayload,
   sessionCookieOptions,
   signSession,
   verifySession,
-} from "./session";
+} from "./session.js";
 
 export async function hashPassword(plain: string): Promise<string> {
   return bcrypt.hash(plain, 10);
