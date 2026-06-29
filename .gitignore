@@ -40,3 +40,5 @@ yarn-error.log*
 *.db
 *.db-journal
 /prisma/dev.db*
+# ...but DO commit the seed DB so Vercel (no-Turso preview) can ship it.
+!/prisma/dev.db
