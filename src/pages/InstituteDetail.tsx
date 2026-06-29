@@ -71,7 +71,7 @@ export function InstituteDetailPage() {
             <p className="mt-1 max-w-2xl text-sm text-slate-500">{institute.address}</p>
           ) : null}
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <StartInspectionButton instituteId={institute.id} />
           <DeleteButton
             url={`/api/institutes/${institute.id}`}
@@ -101,8 +101,8 @@ export function InstituteDetailPage() {
             <StartInspectionButton instituteId={institute.id} label="Start first inspection" />
           </div>
         ) : (
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+            <table className="w-full min-w-[680px] text-left text-sm">
               <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Session</th>

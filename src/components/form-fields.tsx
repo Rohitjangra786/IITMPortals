@@ -16,12 +16,12 @@ export function SectionCard({
 }) {
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-      <div className="mb-4 flex items-start justify-between gap-4 border-b border-slate-100 pb-3">
+      <div className="mb-4 flex flex-col gap-3 border-b border-slate-100 pb-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div>
           <h2 className="text-base font-semibold text-slate-900">{title}</h2>
           {subtitle ? <p className="mt-0.5 text-sm text-slate-500">{subtitle}</p> : null}
         </div>
-        {right}
+        {right ? <div className="shrink-0">{right}</div> : null}
       </div>
       {children}
     </section>

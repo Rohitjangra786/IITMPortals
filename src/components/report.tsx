@@ -110,7 +110,7 @@ export function Report({
   const pII = data.partII;
 
   return (
-    <div className="mx-auto max-w-4xl bg-white p-8 text-slate-900 shadow-sm print:p-0 print:shadow-none">
+    <div className="mx-auto max-w-4xl bg-white p-4 text-slate-900 shadow-sm sm:p-8 print:p-0 print:shadow-none">
       {/* Letterhead */}
       <div className="mb-6 text-center">
         {iitm ? (
@@ -191,7 +191,8 @@ export function Report({
         {s.programmeScores.length === 0 ? (
           <p className="text-xs text-slate-500">No programmes recorded.</p>
         ) : (
-          <table className="w-full border-collapse text-xs">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px] border-collapse text-xs">
             <thead>
               <tr className="bg-slate-100 text-left">
                 <th className="border border-slate-300 px-2 py-1">Programme</th>
@@ -225,6 +226,7 @@ export function Report({
               </tr>
             </tbody>
           </table>
+          </div>
         )}
       </Section>
 

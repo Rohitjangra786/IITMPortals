@@ -122,7 +122,7 @@ export function InspectionEditor({
           </h1>
           <p className="text-sm text-slate-500">JAC Assessment Report · Session {session}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Link to={`/inspections/${inspectionId}/report`} target="_blank">
             <Button variant="secondary">View / print report</Button>
           </Link>
